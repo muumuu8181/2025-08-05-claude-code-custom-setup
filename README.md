@@ -4,6 +4,7 @@
 - **作成日**: 2025-08-05
 - **目的**: Claude Codeのカスタム設定を一括でセットアップ
 - **機能**: デンジャラスモード設定 + サブエージェント一括導入
+- **対応OS**: Windows, Linux, macOS
 - **使用技術**: PowerShell, Bash, Claude Code設定
 
 ## 設定内容
@@ -27,9 +28,30 @@
 ## セットアップ手順
 
 ### 🚀 統合セットアップ（推奨）
+
+#### Windows (PowerShell)
 ```powershell
-# PowerShellで全機能を一括セットアップ
+# 全機能を一括セットアップ（実行ポリシー自動設定付き）
 .\setup-all.ps1
+```
+
+#### Linux/macOS (Bash)
+```bash
+# 全機能を一括セットアップ
+./setup-all.sh
+```
+
+#### 完全自動セットアップ
+```bash
+# どこからでも一発セットアップ
+git clone https://github.com/muumuu8181/2025-08-05-claude-code-dangerous-mode-setup.git
+cd 2025-08-05-claude-code-dangerous-mode-setup
+
+# Windows
+.\setup-all.ps1
+
+# Linux/macOS  
+./setup-all.sh
 ```
 
 ### 📦 個別セットアップ
@@ -100,7 +122,8 @@ cdg
 2025-08-05-claude-code-custom-setup/
 ├── README.md                    # このファイル
 ├── SETUP_GUIDE.md              # 詳細セットアップガイド  
-├── setup-all.ps1               # 統合セットアップスクリプト
+├── setup-all.ps1               # 統合セットアップスクリプト (Windows)
+├── setup-all.sh                # 統合セットアップスクリプト (Linux/macOS)
 ├── setup-cdg.ps1               # デンジャラスモード設定スクリプト
 ├── setup-cdg.sh                # デンジャラスモード設定スクリプト (Bash)
 ├── setup-agents.ps1            # サブエージェント設定スクリプト

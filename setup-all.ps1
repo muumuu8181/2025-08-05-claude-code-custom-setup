@@ -2,6 +2,18 @@
 # Version: 0.1
 # Date: 2025-08-05
 
+# 実行ポリシーの自動設定
+if ((Get-ExecutionPolicy -Scope CurrentUser) -eq 'Restricted') {
+    Write-Host "PowerShell実行ポリシーを設定中..." -ForegroundColor Yellow
+    try {
+        Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+        Write-Host "✓ 実行ポリシーを設定しました" -ForegroundColor Green
+    } catch {
+        Write-Host "✗ 実行ポリシーの設定に失敗しました。管理者権限で実行してください" -ForegroundColor Red
+        exit 1
+    }
+}
+
 Write-Host "=== Claude Code 統合カスタムセットアップ v0.1 ===" -ForegroundColor Cyan
 Write-Host ""
 
