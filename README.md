@@ -1,30 +1,63 @@
-# Claude Code デンジャラスモード設定テンプレート v0.1
+# Claude Code カスタムセットアップテンプレート v0.1
 
 ## 概要
 - **作成日**: 2025-08-05
-- **目的**: Claude Codeのデンジャラスモード（`--dangerously-skip-permissions`）を`cdg`コマンドとして設定
+- **目的**: Claude Codeのカスタム設定を一括でセットアップ
+- **機能**: デンジャラスモード設定 + サブエージェント一括導入
 - **使用技術**: PowerShell, Bash, Claude Code設定
 
 ## 設定内容
 
-### 1. 設定ファイル変更
+### 1. デンジャラスモード設定
 - `.claude.json`の`allowedTools`を`["*"]`に設定
-- 全ツールの自動許可を有効化
+- PowerShell/Bashで`cdg`コマンドを追加
+- `claude --dangerously-skip-permissions`の短縮実行
 
-### 2. PowerShellエイリアス設定
-- `cdg`関数をPowerShellプロファイルに追加
-- `claude --dangerously-skip-permissions`を短縮実行
+### 2. サブエージェント一括導入
+- **Personal agents** (4体): WSL環境 `~/.claude/agents/`
+  - code-reviewer, db-analyzer, gemini-bridge, task-agent
+- **Project agents** (8体): プロジェクト環境 `.claude/agents/`  
+  - agents-manager, doc-writer, doc-reader, endless-tawaimonai,
+  - problem-sleuth-engineer, rule-manager, softengineer-expert, task-splitter
 
-### 3. WSL Bashエイリアス設定（オプション）
-- `.bashrc`に`cdg`エイリアスを追加
-- Linux環境での短縮実行
+### 3. 統合セットアップ
+- 一括でデンジャラスモード + サブエージェントをセットアップ
+- 複数PC間での設定同期が可能
 
 ## セットアップ手順
 
-### 自動セットアップ
+### 🚀 統合セットアップ（推奨）
 ```powershell
-# PowerShellで実行
+# PowerShellで全機能を一括セットアップ
+.\setup-all.ps1
+```
+
+### 📦 個別セットアップ
+
+#### デンジャラスモードのみ
+```powershell
+# PowerShell
 .\setup-cdg.ps1
+
+# Bash
+./setup-cdg.sh
+```
+
+#### サブエージェントのみ
+```powershell
+# PowerShell - 全エージェント
+.\setup-agents.ps1 -All
+
+# PowerShell - Personal agentsのみ
+.\setup-agents.ps1 -Personal
+
+# PowerShell - Project agentsのみ  
+.\setup-agents.ps1 -Project
+
+# Bash
+./setup-agents.sh all        # 全エージェント
+./setup-agents.sh personal   # Personal agentsのみ
+./setup-agents.sh project    # Project agentsのみ
 ```
 
 ### 手動セットアップ
@@ -64,16 +97,31 @@ cdg
 ## ファイル構成
 
 ```
-2025-08-05-claude-code-dangerous-mode-setup/
+2025-08-05-claude-code-custom-setup/
 ├── README.md                    # このファイル
-├── SETUP_GUIDE.md              # 詳細セットアップガイド
-├── setup-cdg.ps1               # PowerShell自動セットアップスクリプト
-├── setup-cdg.sh                # Bash自動セットアップスクリプト
-├── templates/
-│   ├── claude-config.json      # Claude設定テンプレート
-│   └── powershell-profile.ps1  # PowerShellプロファイルテンプレート
-└── docs/
-    └── troubleshooting.md      # トラブルシューティング
+├── SETUP_GUIDE.md              # 詳細セットアップガイド  
+├── setup-all.ps1               # 統合セットアップスクリプト
+├── setup-cdg.ps1               # デンジャラスモード設定スクリプト
+├── setup-cdg.sh                # デンジャラスモード設定スクリプト (Bash)
+├── setup-agents.ps1            # サブエージェント設定スクリプト
+├── setup-agents.sh             # サブエージェント設定スクリプト (Bash)
+├── agents/
+│   ├── personal/               # Personal agents テンプレート (4体)
+│   │   ├── code-reviewer.md
+│   │   ├── db-analyzer.md
+│   │   ├── gemini-bridge.md
+│   │   └── task-agent.md
+│   └── project/                # Project agents テンプレート (8体)
+│       ├── agents-manager.md
+│       ├── doc-reader.md
+│       ├── doc-writer.md
+│       ├── endless-tawaimonai.md
+│       ├── problem-sleuth-engineer.md
+│       ├── rule-manager.md
+│       ├── softengineer-expert.md
+│       └── task-splitter.md
+├── LICENSE                     # MITライセンス
+└── .gitignore                  # Git無視設定
 
 ```
 
@@ -88,9 +136,10 @@ cdg
 ## バージョン履歴
 
 - **v0.1** (2025-08-05): 初回リリース
-  - PowerShell/Bash両対応
-  - 自動セットアップスクリプト
-  - 基本ドキュメント整備
+  - デンジャラスモード設定（PowerShell/Bash対応）
+  - サブエージェント一括セットアップ（12体）
+  - 統合セットアップスクリプト
+  - Personal agents / Project agents 分離対応
 
 ## ライセンス
 
